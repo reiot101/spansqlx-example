@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package packet;
+
+option go_package = "github.com/reiot777/spansqlx-example/packet;packet";
+
+service AccountService {
+  rpc CreateAccount (CreateAccountRequest) returns (CreateAccountResponse);
+  rpc GetAccount (GetAccountRequest) returns (GetAccountResponse);
+  rpc ListAccounts (ListAccountsRequest) returns (ListAccountsResponse);
+}
+
+service TodoService {
+  rpc CreateTask (CreateTaskRequest) returns (CreateTaskResponse);
+  rpc ListTasks (ListTasksRequest) returns (ListTasksResponse);
+}
+
+message CreateAccountRequest {
+  string email = 1;
+}
+
+message CreateAccountResponse {
+  Account data = 1;
+}
+
+message GetAccountRequest {
+  string owner = 1;
+}
+
+message GetAccountResponse {
+  Account data = 1;
+}
+
+message ListAccountsRequest {
+  int32 page_size = 2; 
+  int32 next_page = 3;
+}
+
+message ListAccountsResponse {
+  repeated Account data = 1;
+  int32 next_page = 2;
+}
+
+message Account {
+  string id = 1;
+  string owner = 2;
+  string email = 3;
+  string created_at = 4;
+  string updated_at = 5;
+}
+
+message CreateTaskRequest {
+  string account_id = 1;
+  string name = 2;  
+}
+
+message CreateTaskResponse {
+  Task data = 1;
+}
+
+message ListTasksRequest {
+  string account_id = 1;
+  bool undone = 2;
+  int32 page_size = 3; 
+  int32 next_page = 4;
+}
+
+message ListTasksResponse {
+  repeated Task data = 1;
+}
+
+message Task {
+  string id = 1;
+  string name = 2;
+  bool undone = 3;
+  string created_at = 4;
+  string updated_at = 5;
+}
